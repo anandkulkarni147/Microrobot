@@ -1,39 +1,32 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion, useAnimationControls } from "framer-motion";
 import bacteria from "../../Images/bacteria.svg";
 import "./background.css";
 
-const svgVariants = {};
-
 function Background(props) {
-  const [posX, setPosX] = useState(450);
+  const controls = useAnimationControls();
 
-  const handleMovement = () => {
-    for (var i = 100; i < 500; ++i) {
-      setPosX(i);
-    }
-  };
+  const [posX, setPosX] = useState(400);
+
+  useEffect(() => {
+    controls.start((i) => ({
+      opacity: 0,
+      x: posX,
+      y: 0,
+      transition: { ease: "linear" },
+    }));
+    setPosX(posX + 3);
+  }, [posX, controls]);
 
   return (
     <div className="bacteria">
       <motion.img
         initial={{
-          x: 450,
+          x: 400,
           y: 0,
         }}
         src={bacteria}
-        animate={{
-          x: posX,
-          y: 0,
-        }}
-        transition={{
-          ease: "linear",
-          // duration: 1,
-          // repeat: Infinity,
-        }}
-        onAnimationComplete={() => {
-          setPosX(posX + 3);
-        }}
+        animate={controls}
       />
     </div>
   );

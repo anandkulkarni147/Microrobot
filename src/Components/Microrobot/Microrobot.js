@@ -44,27 +44,27 @@ function Microrobot() {
       setLeftRobotLock(true);
       setMiddleRobotX(parseFloat((middleRobotX - 13.53).toFixed(2)));
       setRightRobotX(parseFloat((rightRobotX - 13.53).toFixed(2)));
-      console.log("1");
+      // console.log("1");
     } else if (e.keyCode === 37 && leftRobotLock && !rightRobotLock) {
       setLeftRobotX(parseFloat((leftRobotX + 14.39).toFixed(2)));
       setMiddleRobotX(parseFloat((middleRobotX + 14.39).toFixed(2)));
       setRightRobotX(parseFloat((rightRobotX - 25.6).toFixed(2)));
       setRightRobotLock(true);
-      console.log("2");
+      // console.log("2");
     } else if (e.keyCode === 65 && leftRobotLock && rightRobotLock) {
       setLeftRobotX(parseFloat((leftRobotX - 25.6).toFixed(2)));
       setMiddleRobotX(parseFloat((middleRobotX + 14.39).toFixed(2)));
       setRightRobotX(parseFloat((rightRobotX + 14.39).toFixed(2)));
       setLeftRobotLock(false);
-      console.log("3");
+      // console.log("3");
     } else if (e.keyCode === 39 && rightRobotLock && !leftRobotLock) {
       setLeftRobotX(parseFloat(leftRobotX.toFixed(2)));
       setMiddleRobotX(parseFloat(middleRobotX.toFixed(2)));
       setRightRobotX(parseFloat((rightRobotX + 39.99).toFixed(2)));
       setRightRobotLock(false);
-      console.log("4");
+      // console.log("4");
     } else {
-      console.log("else");
+      // console.log("else");
     }
   };
 
