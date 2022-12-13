@@ -27,7 +27,6 @@ function App() {
         />
         <div className="characters">
           <Microrobot focus={focus} />
-          <Background focus={focus} />
         </div>
       </div>
     </div>

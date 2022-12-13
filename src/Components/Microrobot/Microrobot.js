@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import microrobot1 from "../../Images/microrobot-01.svg";
 import microrobot2 from "../../Images/micro-02.svg";
 import microrobot3 from "../../Images/micro-03.svg";
+import Background from "../Background/background";
 
 function Microrobot() {
   const [leftRobotX, setLeftRobotX] = useState(100);
@@ -73,10 +74,12 @@ function Microrobot() {
   };
 
   return (
-    <div onKeyUp={handleKeyUp} ref={arenaRef}>
+    <div onKeyUp={handleKeyUp} ref={arenaRef} style={{ display: "flex" }}>
       {/* <p><strong>LeftX-{leftRobotX}, MiddleX-{middleRobotX}, RightX-{rightRobotX}</strong></p>
         <p><strong>{leftRobotLock?"Left Extend-false":"Left Extend-true"}, {rightRobotLock?"Right Extend-false":"Right Extend-true"}</strong></p> */}
-      <button onClick={handleClick}>Play now</button>
+      <button onClick={handleClick} style={{ display: "flex", height: 20 }}>
+        Play now
+      </button>
       <div style={{ width: 80, height: 100, display: "flex" }}>
         <motion.img
           variants={svgVariants}
@@ -97,6 +100,7 @@ function Microrobot() {
           src={microrobot3}
         />
       </div>
+      <Background pos={leftRobotX} />
     </div>
   );
 }
