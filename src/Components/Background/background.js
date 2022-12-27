@@ -24,7 +24,7 @@ function Background(props) {
     //   //   duration: 1,
     //   // },
     // });
-    if (posX - 150 <= props.pos + 80) {
+    if (posX - 210 <= props.pos + 95) {
       setVisible(false);
       controls.stop();
       // document.getElementById("bacteria").style.display = "none";
@@ -37,7 +37,7 @@ function Background(props) {
   };
 
   const animationProps = {
-    initial: { x: 450, y: 0, scale:'1.4' },
+    initial: { x: 450, y: 0, scale: "1.4" },
     show: {
       x: posX,
       y: 0,
@@ -46,43 +46,42 @@ function Background(props) {
       },
     },
     exit: {
-      x: posX+20,
+      x: posX + 20,
       opacity: 0,
       scale: 2,
     },
   };
 
   const lossAnimationProps = {
-    initial: { x: posX+200, y: -130 },
+    initial: { x: posX + 200, y: -130 },
     loss: {
-      x: posX+150,
-    }
-  }
+      x: posX + 150,
+    },
+  };
   const lossAnimationProps5 = {
-    initial: { x: posX+200, y: -130 },
+    initial: { x: posX + 200, y: -130 },
     loss: {
-      x: posX+150,
+      x: posX + 150,
       scale: 3,
-      opacity: 0
-    }
-  }
+      opacity: 0,
+    },
+  };
 
-  function loseAnimation(){
-    console.log("sdasd")
+  function loseAnimation() {
+    console.log("sdasd");
     let id = setInterval(frame, 550);
-    let i=2;
+    let i = 2;
 
     function frame() {
-      if (i==6) {
+      if (i == 6) {
         clearInterval(id);
-      } 
-      else {
-        let k=i-1;
-        let cName1 = "lostBacteria"+k;
-        let cName2 = "lostBacteria"+i;
-        console.log(cName1+"\n"+cName2);
-        document.getElementById(cName1+"").style.display = "none";
-        document.getElementById(cName2+"").style.display = "block";
+      } else {
+        let k = i - 1;
+        let cName1 = "lostBacteria" + k;
+        let cName2 = "lostBacteria" + i;
+        console.log(cName1 + "\n" + cName2);
+        document.getElementById(cName1 + "").style.display = "none";
+        document.getElementById(cName2 + "").style.display = "block";
         i++;
       }
     }
@@ -111,20 +110,75 @@ function Background(props) {
         </AnimatePresence>
       </div>
       <div>
-        <span className="lostBacteria1" id="lostBacteria1" style={{display:'none'}}>
-          {!visible && <motion.img variants={lossAnimationProps} src={LostBacteria1} initial="initial" animate="loss" />}
+        <span
+          className="lostBacteria1"
+          id="lostBacteria1"
+          style={{ display: "none" }}
+        >
+          {!visible && (
+            <motion.img
+              variants={lossAnimationProps}
+              src={LostBacteria1}
+              initial="initial"
+              animate="loss"
+            />
+          )}
         </span>
-        <span className="lostBacteria2" id="lostBacteria2" style={{display:'none'}}>
-          {!visible && <motion.img variants={lossAnimationProps} src={LostBacteria2} initial="initial" animate="loss" />}
+        <span
+          className="lostBacteria2"
+          id="lostBacteria2"
+          style={{ display: "none" }}
+        >
+          {!visible && (
+            <motion.img
+              variants={lossAnimationProps}
+              src={LostBacteria2}
+              initial="initial"
+              animate="loss"
+            />
+          )}
         </span>
-        <span className="lostBacteria3" id="lostBacteria3" style={{display:'none'}}>
-          {!visible && <motion.img variants={lossAnimationProps} src={LostBacteria3} initial="initial" animate="loss" />}
+        <span
+          className="lostBacteria3"
+          id="lostBacteria3"
+          style={{ display: "none" }}
+        >
+          {!visible && (
+            <motion.img
+              variants={lossAnimationProps}
+              src={LostBacteria3}
+              initial="initial"
+              animate="loss"
+            />
+          )}
         </span>
-        <span className="lostBacteria4" id="lostBacteria4" style={{display:'none'}}>
-          {!visible && <motion.img variants={lossAnimationProps} src={LostBacteria4} initial="initial" animate="loss" />}
+        <span
+          className="lostBacteria4"
+          id="lostBacteria4"
+          style={{ display: "none" }}
+        >
+          {!visible && (
+            <motion.img
+              variants={lossAnimationProps}
+              src={LostBacteria4}
+              initial="initial"
+              animate="loss"
+            />
+          )}
         </span>
-        <span className="lostBacteria5" id="lostBacteria5" style={{display:'none'}}>
-          {!visible && <motion.img variants={lossAnimationProps5} src={LostBacteria5} initial="initial" animate="loss" />}
+        <span
+          className="lostBacteria5"
+          id="lostBacteria5"
+          style={{ display: "none" }}
+        >
+          {!visible && (
+            <motion.img
+              variants={lossAnimationProps5}
+              src={LostBacteria5}
+              initial="initial"
+              animate="loss"
+            />
+          )}
         </span>
       </div>
     </div>
