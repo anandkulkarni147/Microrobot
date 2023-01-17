@@ -6,11 +6,16 @@ import LostBacteria2 from "../../Images/bac-lose2.svg";
 import LostBacteria3 from "../../Images/bac-lose3.svg";
 import LostBacteria4 from "../../Images/bac-lose4.svg";
 import LostBacteria5 from "../../Images/bac-lose5.svg";
+import WonBacteria from "../../Images/bac-happy.svg";
 import "./background.css";
 
 function Background(props) {
   const [posX, setPosX] = useState(450);
   const [visible, setVisible] = useState(true);
+  const [userWin, setUserWin] = useState(false);
+  const [userLoss, setUserLoss] = useState(false)
+
+  // console.log("Stream end - "+props.streamEnd);
 
   const controls = useAnimation();
 
@@ -26,13 +31,19 @@ function Background(props) {
     // });
     if (posX - 210 <= props.pos + 95) {
       setVisible(false);
+      setUserWin(true);
       controls.stop();
       // document.getElementById("bacteria").style.display = "none";
       document.getElementById("lostBacteria1").style.visibility = "visible";
       console.log("Entered: " + posX);
       loseAnimation();
-    } else {
-      setPosX(posX + 3);
+    } 
+    else if(!detectBacteriaWin()) {
+      setPosX(posX + 5);
+    }
+    else if(detectBacteriaWin()){
+      setVisible(false)
+      setUserLoss(true)
     }
   };
 
@@ -45,30 +56,36 @@ function Background(props) {
         ease: "linear",
       },
     },
-    exit: {
-      x: posX + 20,
-      opacity: 0,
-      scale: 2,
-    },
+    // exit: {
+    //   x: posX + 20,
+    //   opacity: 0,
+    //   scale: 2,
+    // },
   };
 
   const lossAnimationProps = {
-    initial: { x: posX + 200, y: -130 },
+    initial: { x: posX, y: -130 },
     loss: {
-      x: posX + 150,
+      x: posX,
     },
   };
   const lossAnimationProps5 = {
-    initial: { x: posX + 200, y: -130 },
+    initial: { x: posX, y: -130 },
     loss: {
-      x: posX + 150,
+      x: posX,
       scale: 3,
       opacity: 0,
     },
   };
+  const wonBacteriaProps = {
+    initial: { x: posX, y: -130 },
+    win: {
+      x: posX,
+      scale:1.5
+    },
+  }
 
   function loseAnimation() {
-    console.log("sdasd");
     let id = setInterval(frame, 550);
     let i = 2;
 
@@ -79,7 +96,7 @@ function Background(props) {
         let k = i - 1;
         let cName1 = "lostBacteria" + k;
         let cName2 = "lostBacteria" + i;
-        console.log(cName1 + "\n" + cName2);
+        // console.log(cName1 + "\n" + cName2);
         document.getElementById(cName1 + "").style.display = "none";
         document.getElementById(cName2 + "").style.display = "block";
         i++;
@@ -87,18 +104,32 @@ function Background(props) {
     }
   }
 
+  
+  const detectBacteriaWin = ()=>{
+    let rect = document.getElementById('bacteriaSvg').getBoundingClientRect();
+    let bacteriaPos = rect['left']
+    console.log(bacteriaPos+" --------------- "+props.streamEnd)
+    if(bacteriaPos>=props.streamEnd && props.streamEnd!==0){
+      console.log("End")
+      return true;
+    }
+    return false;
+  }
+
+
   return (
     <div>
       <div className="bacteria" id="bacteria">
         <AnimatePresence>
           {visible && (
             <motion.img
+              id="bacteriaSvg"
               variants={animationProps}
               key="modal"
               initial="initial"
               src={bacteria}
               animate="show"
-              exit="exit"
+              // exit="exit"
               // onAnimationStart={() => check()}
 
               onAnimationComplete={() => check()}
@@ -115,7 +146,7 @@ function Background(props) {
           id="lostBacteria1"
           style={{ display: "none" }}
         >
-          {!visible && (
+          {userWin && (
             <motion.img
               variants={lossAnimationProps}
               src={LostBacteria1}
@@ -129,7 +160,7 @@ function Background(props) {
           id="lostBacteria2"
           style={{ display: "none" }}
         >
-          {!visible && (
+          {userWin && (
             <motion.img
               variants={lossAnimationProps}
               src={LostBacteria2}
@@ -143,7 +174,7 @@ function Background(props) {
           id="lostBacteria3"
           style={{ display: "none" }}
         >
-          {!visible && (
+          {userWin && (
             <motion.img
               variants={lossAnimationProps}
               src={LostBacteria3}
@@ -157,7 +188,7 @@ function Background(props) {
           id="lostBacteria4"
           style={{ display: "none" }}
         >
-          {!visible && (
+          {userWin && (
             <motion.img
               variants={lossAnimationProps}
               src={LostBacteria4}
@@ -171,10 +202,23 @@ function Background(props) {
           id="lostBacteria5"
           style={{ display: "none" }}
         >
-          {!visible && (
+          {userWin && (
             <motion.img
               variants={lossAnimationProps5}
               src={LostBacteria5}
+              initial="initial"
+              animate="loss"
+            />
+          )}
+        </span>
+        <span
+          className="wonBacteria"
+          id="wonBacteria"
+        >
+          {userLoss && (
+            <motion.img
+              variants={wonBacteriaProps}
+              src={WonBacteria}
               initial="initial"
               animate="loss"
             />

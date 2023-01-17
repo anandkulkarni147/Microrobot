@@ -2,31 +2,40 @@ import "./App.css";
 import Microrobot from "./Components/Microrobot/Microrobot";
 import Background from "./Components/Background/background";
 import BackgroundStream from "./Images/back-04.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   const [focus, setFocus] = useState(false);
+  const [streamEnd, setStreamEnd] = useState(0);
 
-  const handleClick = () => {
-    setFocus(!focus);
+  const detectStreamEdges = () => {
+    let rect = document.getElementById('backgroundStream').getBoundingClientRect();
+    // console.log(rect['right'])
+    setStreamEnd(rect['right'])
+    // for (const key in rect) {
+    //   if (typeof rect[key] !== 'function') {
+    //     console.log( `${key} : ${rect[key]}`);
+    //     if(key=='right'){
+    //       setStreamEnd(rect[ke])
+    //     }
+    //   }
+    // }
   };
+  useEffect(()=>{
+    detectStreamEdges();
+  });
 
   return (
     <div className="App">
-      {/* <h1>Directions:</h1>
-      <h3>1. Press the left arrow to control the left sphere movements</h3>
-      <h3>2. Press the right arrow to control the right sphere movements</h3>
-      <h3>3. To move the robot use the combination: &#8592;, &#8594;, &#8592;, &#8594;</h3>
-      <h3>4. Press <i>Play now</i> to start playing</h3> */}
-      {/* <button onClick={handleClick}>Play Now</button> */}
       <div className="arena">
         <img
+          id="backgroundStream"
           src={BackgroundStream}
           alt="Background Stream"
           className="backgroundStream"
         />
         <div className="characters">
-          <Microrobot focus={focus} />
+          <Microrobot focus={focus} streamEnd={streamEnd}/>{console.log(streamEnd)}
         </div>
       </div>
     </div>

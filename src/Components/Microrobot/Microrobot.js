@@ -6,7 +6,7 @@ import microrobot2 from "../../Images/micro-02.svg";
 import microrobot3 from "../../Images/micro-03.svg";
 import Background from "../Background/background";
 
-function Microrobot() {
+function Microrobot(props) {
   const [leftRobotX, setLeftRobotX] = useState(100);
   const [leftRobotLock, setLeftRobotLock] = useState(false);
   const [rightRobotX, setRightRobotX] = useState(100);
@@ -100,7 +100,7 @@ function Microrobot() {
           src={microrobot3}
         />
       </div>
-      <Background pos={leftRobotX} />
+      <Background pos={leftRobotX} streamEnd={props.streamEnd} />
     </div>
   );
 }
