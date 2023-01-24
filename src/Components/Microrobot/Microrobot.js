@@ -1,9 +1,16 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useState, useRef } from "react";
-import microrobot1 from "../../Images/microrobot-01.svg";
+import microrobot1 from "../../Images/micro-01-refined.svg";
 import microrobot2 from "../../Images/micro-02.svg";
 import microrobot3 from "../../Images/micro-03.svg";
+import microHappy1 from "../../Images/micro-happy01.svg";
+import microHappy2 from "../../Images/micro-happy02.svg";
+import microHappy3 from "../../Images/micro-happy03.svg";
+import microSad1 from "../../Images/micro-sad01.svg";
+import microSad2 from "../../Images/micro-sad02.svg";
+import microSad3 from "../../Images/micro-sad03.svg";
+import microrobotSpecial from "../../Images/micro-normal3.svg";
 import Background from "../Background/background";
 
 function Microrobot(props) {
@@ -14,8 +21,11 @@ function Microrobot(props) {
   const [middleRobotX, setMiddleRobotX] = useState(100);
   const [forwardMovement, setForwardMovement] = useState(false);
   const [backwardMovement, setBackwardMovement] = useState(false);
+  const [attack, setAttack] = useState(false);
 
   const arenaRef = useRef(null);
+
+  let userWin = props.userWin;
 
   const svgVariants = {
     hidden: {
@@ -40,14 +50,23 @@ function Microrobot(props) {
     },
   };
 
-  const handleKeyUp = e=>{
+  const handleKeyUp = async e=>{
+
+    //spacebar to toggle attack
+    if(e.keyCode===32){
+      setAttack(!attack)
+      // const res = await setTimeout(5000, 'result')
+      // setAttack(false)
+      return
+    }
 
     // w-87, a-65, s-83 , d-68;
     //left arrow-37, right arrow - 39;
     //A, D control the movements of the left sphere of the robot
     //Arrow keys control the movements of the right sphere of the robot
+    
     //Forward movement - D, left arrow, A, right arrow   | 68, 37, 65, 39
-    //Backward movement - left arrow, D, right arrow, A  | 37, 68, 39, 65
+    //Backward movement - left arrow, D, right arrow, A  | 37, 68, 39, 65    
 
     if(!forwardMovement && !backwardMovement){
       if(e.keyCode===68 && !leftRobotLock){
@@ -77,21 +96,21 @@ function Microrobot(props) {
         setLeftRobotLock(true)
         setMiddleRobotX(parseFloat((middleRobotX-13.53).toFixed(2)))
         setRightRobotX(parseFloat((rightRobotX-13.53).toFixed(2)))
-        console.log("1")
+        // console.log("1")
       }
       else if(e.keyCode===37 && leftRobotLock && !rightRobotLock){
         setLeftRobotX(parseFloat((leftRobotX+14.39).toFixed(2)))
         setMiddleRobotX(parseFloat((middleRobotX+14.39).toFixed(2)))
         setRightRobotX(parseFloat((rightRobotX-25.60).toFixed(2)))
         setRightRobotLock(true)
-        console.log("2")
+        // console.log("2")
       }
       else if(e.keyCode===65 && leftRobotLock && rightRobotLock){
         setLeftRobotX(parseFloat((leftRobotX-25.60).toFixed(2)))
         setMiddleRobotX(parseFloat((middleRobotX+14.39).toFixed(2)))
         setRightRobotX(parseFloat((rightRobotX+14.39).toFixed(2)))
         setLeftRobotLock(false)
-        console.log("3")
+        // console.log("3")
       }
       else if(e.keyCode===39 && rightRobotLock && !leftRobotLock){
         setLeftRobotX(parseFloat((leftRobotX).toFixed(2)))
@@ -100,7 +119,7 @@ function Microrobot(props) {
         setRightRobotLock(false)
         //End forward movement cycle
         setForwardMovement(false)
-        console.log("4")
+        // console.log("4")
       }
     }
 
@@ -114,7 +133,7 @@ function Microrobot(props) {
         setRightRobotLock(true)
         setMiddleRobotX(parseFloat((middleRobotX+13.53).toFixed(2)))
         setRightRobotX(parseFloat((rightRobotX-13.53).toFixed(2)))
-        console.log("1")
+        // console.log("1")
       }
 
       //Stroke B
@@ -123,7 +142,7 @@ function Microrobot(props) {
         setMiddleRobotX(parseFloat((middleRobotX-14.39).toFixed(2)))
         setRightRobotX(parseFloat((rightRobotX-25.60).toFixed(2)))
         setLeftRobotLock(true)
-        console.log("2")
+        // console.log("2")
       }
 
       //Stroke C
@@ -132,7 +151,7 @@ function Microrobot(props) {
         setMiddleRobotX(parseFloat((middleRobotX-14.39).toFixed(2)))
         setRightRobotX(parseFloat((rightRobotX+14.39).toFixed(2)))
         setRightRobotLock(false)
-        console.log("3")
+        // console.log("3")
       }
 
       //Stroke D
@@ -143,7 +162,7 @@ function Microrobot(props) {
         setLeftRobotLock(false)
         //End backward movement cycle        
         setBackwardMovement(false)
-        console.log("4")
+        // console.log("4")
       }
     }
 
@@ -161,7 +180,7 @@ function Microrobot(props) {
       <button onClick={handleClick} style={{ display: "flex", height: 20 }}>
         Play now
       </button>
-      <div style={{ width: 80, height: 100, display: "flex" }}>
+      {!userWin && !props.userLoss && <div style={{ width: 80, height: 100, display: "flex" }}>
         <motion.img
           variants={svgVariants}
           initial="hidden"
@@ -174,14 +193,62 @@ function Microrobot(props) {
           animate="middleVisible"
           src={microrobot2}
         />
-        <motion.img
+        {!attack && <motion.img
           variants={svgVariants}
           initial="hidden"
           animate="rightVisible"
           src={microrobot3}
+        />}
+        {attack && <motion.img
+          variants={svgVariants}
+          initial="hidden"
+          animate="rightVisible"
+          src={microrobotSpecial}
+        />}
+      </div>}
+      {props.userWin && <div style={{ width: 80, height: 100, display: "flex" }}>
+        <motion.img
+          variants={svgVariants}
+          initial="hidden"
+          animate="leftVisible"
+          src={microHappy1}
+        />
+        <motion.img
+          variants={svgVariants}
+          initial="hidden"
+          animate="middleVisible"
+          src={microHappy2}
+        />
+        <motion.img
+          variants={svgVariants}
+          initial="hidden"
+          animate="rightVisible"
+          src={microHappy3}
         />
       </div>
-      <Background pos={leftRobotX} streamEnd={props.streamEnd} />
+      }
+      {props.userLoss && <div style={{ width: 80, height: 100, display: "flex" }}>
+        <motion.img
+          variants={svgVariants}
+          initial="hidden"
+          animate="leftVisible"
+          src={microSad1}
+        />
+        <motion.img
+          variants={svgVariants}
+          initial="hidden"
+          animate="middleVisible"
+          src={microSad2}
+        />
+        <motion.img
+          variants={svgVariants}
+          initial="hidden"
+          animate="rightVisible"
+          src={microSad3}
+        />
+      </div>
+      }
+      <Background pos={leftRobotX} streamEnd={props.streamEnd} userWin={props.userWin} updateUserWin={props.updateUserWin} userLoss={props.userLoss} updateUserLoss={props.updateUserLoss} />
     </div>
   );
 }
