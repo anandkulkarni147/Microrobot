@@ -20,8 +20,7 @@ function Background(props) {
 
   const controls = useAnimation();
 
-  const src =
-    "https://drive.google.com/file/d/1kcINEVMxICx6fXOmYXH4yvQpEM6wmGpr/view?usp=share_link";
+  const src = "../..Images/microhappy-01.mp4";
 
   const Video = () => {
     return (
@@ -144,6 +143,7 @@ function Background(props) {
               onAnimationComplete={() => check()}
               onAnimationEnd={() => {
                 Video();
+                console.log("dfsdf");
                 document.getElementById("bacteria").style.display = "flex";
               }}
             />
