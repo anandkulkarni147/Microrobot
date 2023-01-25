@@ -20,6 +20,18 @@ function Background(props) {
 
   const controls = useAnimation();
 
+  const src =
+    "https://drive.google.com/file/d/1kcINEVMxICx6fXOmYXH4yvQpEM6wmGpr/view?usp=share_link";
+
+  const Video = () => {
+    return (
+      <video controls width="100%">
+        <source src={src} type="video/mp4" />
+        Sorry, your browser doesn't support embedded videos.
+      </video>
+    );
+  };
+
   const check = () => {
     if (!visible) controls.stop();
     // await controls.start({
@@ -38,13 +50,11 @@ function Background(props) {
       document.getElementById("lostBacteria1").style.visibility = "visible";
       console.log("Entered: " + posX);
       loseAnimation();
-    } 
-    else if(!detectBacteriaWin()) {
-      setPosX(posX +3);
-    }
-    else if(detectBacteriaWin()){
-      setVisible(false)
-      props.updateUserLoss(true)
+    } else if (!detectBacteriaWin()) {
+      setPosX(posX + 3);
+    } else if (detectBacteriaWin()) {
+      setVisible(false);
+      props.updateUserLoss(true);
     }
   };
 
@@ -82,9 +92,9 @@ function Background(props) {
     initial: { x: posX, y: -130 },
     win: {
       x: posX,
-      scale:1.5
+      scale: 1.5,
     },
-  }
+  };
 
   function loseAnimation() {
     let id = setInterval(frame, 550);
@@ -105,18 +115,16 @@ function Background(props) {
     }
   }
 
-  
-  const detectBacteriaWin = ()=>{
-    let rect = document.getElementById('bacteriaSvg').getBoundingClientRect();
-    let bacteriaPos = rect['left']
+  const detectBacteriaWin = () => {
+    let rect = document.getElementById("bacteriaSvg").getBoundingClientRect();
+    let bacteriaPos = rect["left"];
     // console.log(bacteriaPos+" --------------- "+props.streamEnd)
-    if(bacteriaPos>=props.streamEnd && props.streamEnd!==0){
-      console.log("End")
+    if (bacteriaPos >= props.streamEnd && props.streamEnd !== 0) {
+      console.log("End");
       return true;
     }
     return false;
-  }
-
+  };
 
   return (
     <div>
@@ -135,6 +143,7 @@ function Background(props) {
 
               onAnimationComplete={() => check()}
               onAnimationEnd={() => {
+                Video();
                 document.getElementById("bacteria").style.display = "flex";
               }}
             />
@@ -212,10 +221,7 @@ function Background(props) {
             />
           )}
         </span>
-        <span
-          className="wonBacteria"
-          id="wonBacteria"
-        >
+        <span className="wonBacteria" id="wonBacteria">
           {props.userLoss && (
             <motion.img
               variants={wonBacteriaProps}
