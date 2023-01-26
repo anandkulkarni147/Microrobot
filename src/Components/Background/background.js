@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ReactPlayer from "react-player";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import Microrobot from "../Microrobot/Microrobot";
 import bacteria from "../../Images/bacteria.svg";
@@ -21,15 +22,6 @@ function Background(props) {
   const controls = useAnimation();
 
   const src = "../..Images/microhappy-01.mp4";
-
-  const Video = () => {
-    return (
-      <video controls width="100%">
-        <source src={src} type="video/mp4" />
-        Sorry, your browser doesn't support embedded videos.
-      </video>
-    );
-  };
 
   const check = () => {
     if (!visible) controls.stop();
@@ -140,10 +132,10 @@ function Background(props) {
               // exit="exit"
               // onAnimationStart={() => check()}
 
-              onAnimationComplete={() => check()}
+              onAnimationComplete={() => {
+                check();
+              }}
               onAnimationEnd={() => {
-                Video();
-                console.log("dfsdf");
                 document.getElementById("bacteria").style.display = "flex";
               }}
             />
