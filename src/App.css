@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+.circle {
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+  margin: 100px;
+  background: radial-gradient(circle at 100px 100px, #5cabff, #000);
+}

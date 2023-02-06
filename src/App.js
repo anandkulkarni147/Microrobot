@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { motion } from "framer-motion";
+import { useState } from "react";
 
 function App() {
+  const [move, setMove] = useState(false);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") setMove(!move);
+  });
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <motion.div
+        className="circle"
+        tabIndex={0}
+        animate={{ x: move ? 300 : 0 }}
+        transition={{ type: "tween", duration: 5 }}
+      ></motion.div>
     </div>
   );
 }
